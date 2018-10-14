@@ -1,0 +1,100 @@
+.main {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: url('https://us.123rf.com/450wm/yamabikay/yamabikay1701/yamabikay170100738/70412718-a-rough-texture-background-of-white-watercolour-paper-high-quality-texture-in-extremely-high-resolut.jpg?ver=6');
+}
+
+.text-center {
+    text-align: center;
+    padding: 10px;
+    text-decoration: underline;
+    text-shadow: 1px 1px 1px gray;
+}
+
+.inner-container {
+    width: 100%;
+    height: 92%;
+}
+
+.right-container {
+    width: 49%;
+    height: 100%;
+    float: right;
+}
+
+.left-container {
+    width: 49%;
+    height: 100%;
+    float: left;
+}
+
+.right-container-list {
+    width: 90%;
+    height: 90%;
+    border: 1px solid gray;
+    border-radius: 5px;
+    overflow: auto;
+    box-sizing: border-box;
+    margin-top: 27px;
+}
+
+* {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.todo-content {
+    font-size: 13px;
+    font-family: fantasy;
+    margin-top: 10px;
+    text-indent: 37px;
+    color: #790e0ed4;
+}
+
+input#todo-heading {
+    border: none;
+    border-bottom: 1px solid gray;
+    outline: none;
+    font-size: 15px;
+    font-family: monospace;
+    transition: border;
+    color: maroon;
+    text-transform: uppercase;
+    background: transparent;
+}
+
+input#todo-heading:focus {
+    border-bottom: 2px solid black;
+}
+
+textarea#todo-content {
+    outline: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid gray;
+    color: maroon;
+    text-transform: capitalize;
+}
+
+textarea#todo-content:focus {
+    border: 2px solid black;
+}
+
+details {
+    background: floralwhite;
+    border: 1px solid black;
+    border-top: none;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    margin: 9px;
+    margin-bottom: 15px;
+}
+
+details:first-of-type {
+    border-top: 1px solid black; 
+}
+
+h2 {
+    background: darkred;
+
+}
