@@ -12,7 +12,7 @@ export default class App extends Component {
            todoHeading: '',
            todoTextArea: '',
            todoList: [],
-           isChecked: false
+           checked: false
         }
         this.editObj = null;
     }   
@@ -35,6 +35,7 @@ export default class App extends Component {
         this.setState({
             todoHeading: '',
             todoTextArea: '',
+            checked: false
         });
         this.setOpacity = 1;
     }
@@ -42,18 +43,21 @@ export default class App extends Component {
     handleSubmit(evt) {
         evt.preventDefault();
         if (!this.state.todoHeading || !this.state.todoTextArea) return alert("Fields cannot be empty!!!");
+
         if (this.setTextIsEdit()) {  
                                                         /----------For updating Todo list content--------------/
             this.setState(prevState => {
+                let check = false;
+                if (this.editObj.checked) check = true;
                 return {
                     todoList: prevState.todoList.map(items => {
                         if (items.id == this.editObj.id) {
                             return {
                                 id: this.editObj.id,
-                                heading: prevState.todoHeading,
-                                textArea:  prevState.todoTextArea,
+                                heading: check ? items.heading : prevState.todoHeading,
+                                textArea: check ? items.textArea : prevState.todoTextArea,
                                 isCompleted: false,
-                                isChecked: prevState.isChecked
+                                isChecked: prevState.checked
                             }
                         }
                         return items;
@@ -68,37 +72,18 @@ export default class App extends Component {
                         heading: prevState.todoHeading,
                         textArea: prevState.todoTextArea,
                         isCompleted: false,
-                        isChecked: false
+                        isChecked: prevState.checked
                     })
                 }   
             },this.clearTextData.bind(this))
         }
     }
 
-
-    handleIsComplete(id) {
-        let matchObj = this.state.todoList.find(elem => {
-            if (id == elem.id ) {
-                return elem;
-            }
-        });
-
-        this.setState(prevState => {
-            return {
-                todoList: prevState.todoList.map(items => {
-                    if (items.id == matchObj.id) {
-                        return {
-                            id: items.id,
-                            heading: matchObj.heading,
-                            textArea: matchObj.textArea,
-                            isCompleted: false,
-                            isChecked: true
-                        }
-                    }
-                    return items;
-                })
-            }
-        }, () => console.log(this.state.todoList)) 
+    handleIsComplete(evt) {
+        if (this.state.checked) return;
+        this.setState({
+            checked: true
+        }) 
     }
 
     leftContainer() {
@@ -145,6 +130,7 @@ export default class App extends Component {
                                 'Add'
                             } 
                         </button>
+                        
                     </div>
                 </form>
             </div>
@@ -162,13 +148,13 @@ export default class App extends Component {
         let obj = this.state.todoList.find(item => {
             return item.id == index;
         });
-        if (obj.isChecked) return;
 
         this.editObj = obj;
         this.setState((prevState) => {
             return {
                 todoHeading: obj.heading,
                 todoTextArea: obj.textArea,
+                checked: obj.isChecked,
                 todoList: prevState.todoList.map(item => {
                     if (item.id == obj.id) {
                         item.isCompleted = true
@@ -183,6 +169,9 @@ export default class App extends Component {
                 return item;
             }
         });
+
+        if(this.opacity && this.opacity.isChecked) return this.setOpacity = 0.4;
+        this.setOpacity = 1;
     }
 
     handleDelete(index) {
@@ -215,11 +204,7 @@ export default class App extends Component {
                                 type="button" 
                                 style={{width: 112, height: 21, marginRight: 5, opacity: this.setTextIsEdit() ? 0.3 : 1}} 
                                 onClick={this.handleEdit.bind(this, todoItem.id)}
-                                disabled={this.setTextIsEdit() || this.state.todoList.find(elem => {
-                                    if (elem.id == todoItem.id) {
-                                        return elem
-                                    } 
-                                })['isChecked']}
+                                disabled={this.setTextIsEdit()}
                             >
                                 Edit
                             </button>
@@ -230,21 +215,14 @@ export default class App extends Component {
                             >
                                 Delete
                             </button>
-                            <span 
-                                style={{width: '100%', height: 21, marginTop: 5}} 
-                            >
-                                <input 
-                                    type="checkbox" 
-                                    style={{ marginTop: 3, marginRight: 15 }} 
-                                    onChange={this.handleIsComplete.bind(this, todoItem.id)}
-                                    checked={this.state.todoList.find(elem => {
-                                        if (elem.id == todoItem.id) {
-                                            return elem
-                                        } 
-                                    })['isChecked']}
-                                />
-                                <label htmlFor="isCompleted">Completed</label>
-                            </span>
+                            <input 
+                                type="checkbox" 
+                                style={{ margin: 10, marginLeft: 20}} 
+                                id="isCompleted" 
+                                onChange={this.handleIsComplete.bind(this)}
+                                checked={this.state.checked}
+                            />
+                            <label htmlFor="isCompleted">Completed</label>
                         </span>
                     </summary>
                     <p className="todo-content">{todoItem.textArea}</p>
