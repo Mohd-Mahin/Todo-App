@@ -6,9 +6,7 @@
   "homepage": "https://Mohd-Mahin.github.io/Todo-App/src",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "build": "webpack --mode production"
   },
   "author": "",
   "license": "ISC",
